@@ -25,4 +25,4 @@ Castle Foreground - https://pixel-1992.itch.io/dark-castle-in-the-sky
 
 text box - https://www.freeiconspng.com/img/24070
 
-heart - https://temok.itch.io/heart-container-animated-in-pixel-art/download/eyJpZCI6MTI0MzA3NywiZXhwaXJlcyI6MTczMTkwMjgxNn0%3d.jmCPVT%2fSc9asi%2biaczNfia5Ge3s%3d
+heart - https://temok.itch.io/heart-container-animated-in-pixel-art
