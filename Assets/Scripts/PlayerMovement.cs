@@ -18,6 +18,10 @@ public class PlayerMovement : MonoBehaviour
     public InputAction MoveAction;
     public Image healthBar;                // Reference to the health bar UI image
 
+    public bool canMove = false; // Flag to control whether the player can move
+
+    public float healthRestoreAmount = 2f;       // Amount of health restored by health items
+
     private float startHealth = 0;
 
     private Rigidbody2D rigidbody2d;
@@ -48,7 +52,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Movement(); 
+        if(canMove)
+        {
+            Movement(); 
+        }
+        
     }
 
     void FixedUpdate()
@@ -155,6 +163,16 @@ public class PlayerMovement : MonoBehaviour
                 TakeDamage(damageInfo.enemyDamageAmount);
             }
         }
+
+        // Check if the player collided with a health item
+        if (other.CompareTag("Health") && health < startHealth)
+        {
+            // Restore health, but don't exceed max health
+            HealPlayer(healthRestoreAmount);
+
+            // Optionally, destroy the health item
+            Destroy(other.gameObject);
+        }
     }
     private void TakeDamage(float damage)
     {
@@ -181,6 +199,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void HealPlayer(float healAmount)
+    {
+        health += healAmount;
+        if (health > startHealth)
+        {
+            health = startHealth;
+        }
+    }
     private void UpdateHealthUI()
     {
         // Assuming 100 is the maximum health, adjust as necessary
