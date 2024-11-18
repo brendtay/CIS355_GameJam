@@ -22,3 +22,5 @@ Skeleton - https://jesse-m.itch.io/skeleton-pack
 background Planets - https://ansimuz.itch.io/space-background/download/eyJpZCI6MTMzODY0LCJleHBpcmVzIjoxNzMxODk0Mzk2fQ%3d%3d.oM94%2f4LuPqRM4IkcmL6k3QANMcw%3d
 
 Castle Foreground - https://pixel-1992.itch.io/dark-castle-in-the-sky
+
+text box - https://www.freeiconspng.com/img/24070
