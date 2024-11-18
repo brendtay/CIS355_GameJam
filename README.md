@@ -16,3 +16,5 @@ https://luizmelo.itch.io/monsters-creatures-fantasy
 https://www.youtube.com/watch?v=0tDPxNB2JNs
 
 wizard: https://luizmelo.itch.io/evil-wizard-3/download/eyJpZCI6MjY5MjEyNiwiZXhwaXJlcyI6MTczMTg5MzAzOX0%3d.FF93y%2fgK4MDFqTuLKOj6akZanjo%3d
+
+Skeleton - https://jesse-m.itch.io/skeleton-pack
