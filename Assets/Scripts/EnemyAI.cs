@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour
@@ -15,6 +16,8 @@ public class EnemyAI : MonoBehaviour
     public Image healthBar;                // Reference to the health bar UI image
     public Collider2D AttackAreaLeft;      // Enemy's left attack collider
     public Collider2D AttackAreaRight;     // Enemy's right attack collider
+    public GameObject heart;               // Heart prefab to spawn upon enemy death
+    public float heartDropChance = 50.0f;  // Percentage chance to drop a heart, default is 50%
 
     private Transform player;              // Reference to the player's position
     private float startHealth = 0;
@@ -24,18 +27,20 @@ public class EnemyAI : MonoBehaviour
     private bool isAttacking = false;      // Flag to check if enemy is currently attacking
     private float lastAttackTime;          // Tracks the last attack time
 
-    private EnemyAnimation enemyAnimation; // Reference to EnemyAnimation script
+   
     private float lastDamageTime = 0;      // Tracks the last damage time
+    private Animator animator;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform; // Automatically find the player
         rb = GetComponent<Rigidbody2D>();
-        enemyAnimation = GetComponent<EnemyAnimation>();
+      
 
         // Disable both attack colliders initially
         AttackAreaLeft.enabled = false;
         AttackAreaRight.enabled = false;
+        animator = GetComponent<Animator>();
 
         startHealth = health;
     }
@@ -51,7 +56,8 @@ public class EnemyAI : MonoBehaviour
             // Move towards the player if outside stop distance
             moveDirection = (player.position - transform.position).normalized;
             rb.velocity = moveDirection * speed;
-            enemyAnimation.UpdateMoveDirection(moveDirection.x); // Update movement direction in animation
+            //enemyAnimation.UpdateMoveDirection(moveDirection.x); 
+            animator.SetFloat("Move_X", moveDirection.x);
         }
         else
         {
@@ -68,7 +74,7 @@ public class EnemyAI : MonoBehaviour
     {
         isAttacking = true;
         lastAttackTime = Time.time;
-        enemyAnimation.TriggerAttack();
+        TriggerAttack();
 
         yield return new WaitForSeconds(0.2f); // Adjust based on animation timing
 
@@ -115,7 +121,7 @@ public class EnemyAI : MonoBehaviour
 
             if (health > 0)
             {
-                enemyAnimation.TriggerHit(); // Play hit reaction animation
+                TriggerHit(); // Play hit reaction animation
                 //Debug.Log("Enemy hit");
             }
             else
@@ -134,9 +140,31 @@ public class EnemyAI : MonoBehaviour
     private void Die()
     {
         isDead = true;
-        enemyAnimation.TriggerDeath(); // Trigger death animation
+        TriggerDeath(); // Trigger death animation
         rb.velocity = Vector2.zero;
 
+        // Check if a heart should be dropped based on heartDropChance
+        float dropChance = Random.Range(0f, 100f);
+        if (dropChance <= heartDropChance)
+        {
+            Instantiate(heart, transform.position, Quaternion.identity); // Spawn the heart at the enemy's position
+            Debug.Log("enemy dropped health!");
+        }
+
         Destroy(gameObject, deathAnimationTime); // Adjust delay to match death animation length
+    }
+    private void TriggerAttack()
+    {
+        animator.SetTrigger("Attack");
+    }
+
+    private void TriggerHit()
+    {
+        animator.SetTrigger("Hit");
+    }
+
+    private void TriggerDeath()
+    {
+        animator.SetTrigger("Death");
     }
 }

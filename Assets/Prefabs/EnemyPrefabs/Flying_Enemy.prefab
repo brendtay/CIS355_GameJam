@@ -449,7 +449,6 @@ GameObject:
   - component: {fileID: 8646249425306075917}
   - component: {fileID: 4763160447812233719}
   - component: {fileID: 9141971386895772023}
-  - component: {fileID: 6131007903831210544}
   - component: {fileID: 8528271761988116694}
   - component: {fileID: 7034421254216828901}
   - component: {fileID: 8717350424290607775}
@@ -552,18 +551,8 @@ MonoBehaviour:
   healthBar: {fileID: 6199709389279108708}
   AttackAreaLeft: {fileID: 1065427128598632857}
   AttackAreaRight: {fileID: 3971649715645798400}
---- !u!114 &6131007903831210544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8352615381377669621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59d5cc44a68c73c458d2f525fb9d5d9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  heart: {fileID: 1901031415021653118, guid: 77c361a16282be74fa14033e264511b2, type: 3}
+  heartDropChance: 50
 --- !u!50 &8528271761988116694
 Rigidbody2D:
   serializedVersion: 4

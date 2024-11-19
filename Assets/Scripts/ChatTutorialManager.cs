@@ -6,26 +6,44 @@ using TMPro;
 
 public class ChatTutorialManager : MonoBehaviour
 {
+    // Public text objects
     public TMP_Text chatText; // Drag your "ChatText" TMP_Text object here in the inspector
-    public GameObject chatBox; // Reference to the GameObject containing the chat text (usually the parent)
+    public Canvas tutorialCanvas; // Reference to the Canvas containing the chat box
+    
+    // Private text QueueStrings
     private Queue<string> tutorialMessages; // Queue to store tutorial messages
+    private Queue<string> secondaryMessages; // Second queue for additional messages
 
-    private PlayerMovement playerMovement; // Reference to PlayerMovement script
-
+    // Public Objects
     public GameObject[] enemies; // Array to hold enemy prefabs
     public Transform[] spawnPoints; // Array to hold spawn points for enemies
+    public GameObject wizard;
+    public GameObject endLevelCollision;
 
+    // Private variables for tracking
     private bool enemiesSpawned = false; // Track if enemies have been spawned
-
+    private bool secondaryMessagesActive = false; // Track if secondary messages are active
+    private bool enterHasBeenPressed = false; // Track if enter has been pressed to skip 
+    private int partOfTutorial = 1; // Tracks what part of the tutorial the player is at 
+    private int enemyRound = 0; // Tracks what round the player is at
+    
+   // Refrences to scripts
+    private GameManager gameManager;
 
     void Start()
     {
-        tutorialMessages = new Queue<string>();
+        tutorialMessages = new Queue<string>(); // Loads the string for message 1
+        secondaryMessages = new Queue<string>(); // Loads the string for message 2
+
+        gameManager = FindObjectOfType<GameManager>();
 
         // Load initial tutorial messages (can be customized per level or scene)
         LoadTutorialMessages(new string[]
         {
-            "Welcome! Use WASD to move around",
+            "Welcome! Warrier! thank you volentering!",
+            "Im Lyra I will be helping",
+            "First things first lets teach you how to play!",
+            "Use WASD to move around",
             "Press Space to jump.",
             "Use the Up Arrow for a medium attack.",
             "Try the Left Arrow for a light attack.",
@@ -35,14 +53,16 @@ public class ChatTutorialManager : MonoBehaviour
             "I’ll summon some enemies!"
         });
 
-        // Get the PlayerMovement component
-        playerMovement = FindObjectOfType<PlayerMovement>();
-
-        // Disable player movement initially
-        if (playerMovement != null)
+        // Load additional secondary messages
+        LoadSecondaryMessages(new string[]
         {
-            playerMovement.canMove = true;
-        }
+            "If you saw a enemy dropped a heart!",
+            "Walk over it to pick it up",
+            "You can store up to 3 hearts if your health is full",
+            "You can press E at any time to use one!",
+            "Congradulations you finished the tutorial!",
+            "Lets continue into this journy."
+        });
 
         // Start displaying messages
         DisplayNextMessage();
@@ -53,8 +73,41 @@ public class ChatTutorialManager : MonoBehaviour
         // Check if enemies have been spawned and if there are no remaining enemies
         if (enemiesSpawned && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
         {
-            enemiesSpawned = false; // Reset spawn flag
-            ShowChatBox("Well done! You've defeated all enemies!"); // Show a message after defeating all enemies
+            if (enemyRound < 3)
+            {
+                enemiesSpawned = false; // Reset spawn flag to allow spawning again
+                SpawnEnemies(); // Spawn the next round of enemies
+                Debug.Log(enemyRound);
+            }
+            else
+            {
+                enemiesSpawned = false; // Reset spawn flag for final completion
+                ShowChatBox("Well done! You've defeated all enemies!"); // Show a message after defeating all enemies
+                partOfTutorial = 2;
+                enterHasBeenPressed = false;
+
+                // Activate the secondary messages
+                secondaryMessagesActive = true;
+                wizard.gameObject.SetActive(true);
+                StartCoroutine(DisplaySecondaryMessagesAfterDelay(3f)); // Start displaying secondary messages after a delay
+            }
+        }
+
+        // Skip tutorial messages and spawn enemies immediately if Enter is pressed
+        if (Input.GetKeyDown(KeyCode.Return) && !enterHasBeenPressed)
+        {
+            if (partOfTutorial == 1)
+            {
+                SpawnEnemies();
+                SkipTutorial();
+            }
+            else if (partOfTutorial == 2)
+            {
+                SkipSecondaryMessages();
+                Debug.Log("End Tutorial");
+            }
+
+            enterHasBeenPressed = true;
         }
     }
 
@@ -70,28 +123,34 @@ public class ChatTutorialManager : MonoBehaviour
         }
     }
 
+    public void LoadSecondaryMessages(string[] messages)
+    {
+        // Clear any existing secondary messages
+        secondaryMessages.Clear();
+
+        // Enqueue new secondary messages
+        foreach (string message in messages)
+        {
+            secondaryMessages.Enqueue(message);
+        }
+    }
+
     public void DisplayNextMessage()
     {
-        if (tutorialMessages.Count == 0)
+        if (tutorialMessages.Count > 0)
+        {
+            // Display the next message from the tutorial queue
+            chatText.text = tutorialMessages.Dequeue();
+            StartCoroutine(DisplayNextMessageWithDelay(5f)); // Adjust delay time as needed
+        }
+        else
         {
             chatText.text = ""; // Clear chat box when done
-            chatBox.SetActive(false); // Hide the chat box
-
-            // Enable player movement when tutorial is complete
-            if (playerMovement != null)
-            {
-                playerMovement.canMove = true;
-            }
-            Debug.Log("Spawned Enemies");
+            tutorialCanvas.gameObject.SetActive(false); // Hide the entire canvas
+            wizard.gameObject.SetActive(false);
+            // Spawn enemies once the tutorial messages are done
             SpawnEnemies();
-            return;
         }
-
-        // Display the next message in the queue
-        chatText.text = tutorialMessages.Dequeue();
-
-        // Automatically proceed to the next message after a delay
-        StartCoroutine(DisplayNextMessageWithDelay(5f)); // Adjust delay time as needed
     }
 
     private IEnumerator DisplayNextMessageWithDelay(float delay)
@@ -102,17 +161,68 @@ public class ChatTutorialManager : MonoBehaviour
 
     private void SpawnEnemies()
     {
-        for (int i = 0; i < enemies.Length && i < spawnPoints.Length; i++)
+        if (!enemiesSpawned)
         {
-            Instantiate(enemies[i], spawnPoints[i].position, spawnPoints[i].rotation);
+            for (int i = 0; i < enemies.Length && i < spawnPoints.Length; i++)
+            {
+                Instantiate(enemies[i], spawnPoints[i].position, spawnPoints[i].rotation);
+            }
+            enemiesSpawned = true; // Set flag to true once enemies are spawned
+            enemyRound++; // Increment only when enemies are spawned
         }
-
-        enemiesSpawned = true; // Set flag to true once enemies are spawned
     }
+
 
     private void ShowChatBox(string message)
     {
-        chatBox.SetActive(true); // Show the chat box
+        tutorialCanvas.gameObject.SetActive(true); // Show the entire canvas
+        wizard.gameObject.SetActive(true);
         chatText.text = message; // Display the message
+    }
+
+    private IEnumerator DisplaySecondaryMessagesAfterDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay); // Delay before starting secondary messages
+        DisplaySecondaryMessage();
+    }
+
+    private void DisplaySecondaryMessage()
+    {
+        if (secondaryMessages.Count > 0 && secondaryMessagesActive)
+        {
+            tutorialCanvas.gameObject.SetActive(true); // Show the entire canvas
+            wizard.gameObject.SetActive(true);
+            chatText.text = secondaryMessages.Dequeue();
+            StartCoroutine(DisplaySecondaryMessageWithDelay(5f)); // Adjust delay time as needed
+        }
+        else
+        {
+            // Hide the canvas if no more secondary messages
+            tutorialCanvas.gameObject.SetActive(false);
+            wizard.gameObject.SetActive(false);
+            secondaryMessagesActive = false;
+            gameManager.levelComplete = true; 
+        }
+    }
+
+    private IEnumerator DisplaySecondaryMessageWithDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        DisplaySecondaryMessage();
+    }
+
+    private void SkipTutorial()
+    {
+        tutorialMessages.Clear(); // Clear all tutorial messages
+        tutorialCanvas.gameObject.SetActive(false); // Hide the entire canvas
+        wizard.SetActive(false);
+    }
+
+    private void SkipSecondaryMessages()
+    {
+        secondaryMessages.Clear(); // Clear all secondary messages
+        tutorialCanvas.gameObject.SetActive(false); // Hide the entire canvas
+        wizard.gameObject.SetActive(false);
+        secondaryMessagesActive = false; // Stop secondary messages from displaying
     }
 }

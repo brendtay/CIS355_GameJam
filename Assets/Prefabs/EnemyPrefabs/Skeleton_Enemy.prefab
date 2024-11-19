@@ -375,7 +375,6 @@ GameObject:
   - component: {fileID: 994833380287484665}
   - component: {fileID: 4435856936128758837}
   - component: {fileID: 7459262064902136320}
-  - component: {fileID: 496110765526298393}
   - component: {fileID: 2255263013619344840}
   - component: {fileID: 250934414902006036}
   m_Layer: 0
@@ -498,18 +497,8 @@ MonoBehaviour:
   healthBar: {fileID: 6924298405999016994}
   AttackAreaLeft: {fileID: 8830771369335988070}
   AttackAreaRight: {fileID: 4156225257256794033}
---- !u!114 &496110765526298393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5117842550951103893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59d5cc44a68c73c458d2f525fb9d5d9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  heart: {fileID: 1901031415021653118, guid: 77c361a16282be74fa14033e264511b2, type: 3}
+  heartDropChance: 100
 --- !u!61 &2255263013619344840
 BoxCollider2D:
   m_ObjectHideFlags: 0
