@@ -1,4 +1,4 @@
-list of sources
+List of sources
 Used
 -----------------------
 Main character: https://free-game-assets.itch.io/free-fantasy-knight
