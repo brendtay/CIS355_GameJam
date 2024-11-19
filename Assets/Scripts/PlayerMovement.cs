@@ -19,6 +19,13 @@ public class PlayerMovement : MonoBehaviour
     public Image healthBar;                // Reference to the health bar UI image
 
     public float healthRestoreAmount = 2f;       // Amount of health restored by health items
+    public float scoreToPowerUp = 10f;
+
+    public Image powerupBar;       // Reference to the power-up bar UI image
+    private float currentPowerup = 0f;
+    private float maxPowerup = 100f;
+    public float powerupIncrement = 10f; // Amount to increase per successful hit
+
 
     private float startHealth = 0;
 
@@ -48,11 +55,13 @@ public class PlayerMovement : MonoBehaviour
         AttackAreaRight.enabled = false;
 
         startHealth = playerHealth;
+        powerupBar.fillAmount = 0f; 
     }
 
     void Update()
     {
         Movement();
+        
     }
 
     void FixedUpdate()
@@ -66,27 +75,16 @@ public class PlayerMovement : MonoBehaviour
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         // Set the appropriate trigger and enable colliders based on the attack index
+        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        // Set the appropriate trigger for the attack based on the attack index
         if (!stateInfo.IsName($"Attack {attackIndex + 1}"))
         {
             animator.SetTrigger($"Attack {attackIndex + 1}");
-
-            yield return new WaitForSeconds(0.3f);
-
-            if (moveDirection.x > 0)
-            {
-                AttackAreaRight.GetComponent<DamageInfo>().playerDamageAmount = attackDamage[attackIndex];
-                AttackAreaRight.enabled = true;
-            }
-            else
-            {
-                AttackAreaLeft.GetComponent<DamageInfo>().playerDamageAmount = attackDamage[attackIndex];
-                AttackAreaLeft.enabled = true;
-            }
-
-            yield return new WaitForSeconds(0.3f);
-            AttackAreaLeft.enabled = false;
-            AttackAreaRight.enabled = false;
         }
+
+        // Wait for the attack animation to finish
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
     }
     void Movement()
     {
@@ -223,4 +221,42 @@ public class PlayerMovement : MonoBehaviour
         animator.SetTrigger("Death");
         gameManager.GameOver();
     }
+    public void IncrementPowerup()
+    {
+        currentPowerup += powerupIncrement;
+        if (currentPowerup > maxPowerup) currentPowerup = maxPowerup;
+        UpdatePowerupUI();
+    }
+
+    private void UpdatePowerupUI()
+    {
+        powerupBar.fillAmount = currentPowerup / maxPowerup;
+    }
+
+    private void UsePowerUp()
+    {
+
+    }
+
+    public void EnableAttackCollider(int attackIndex)
+    {
+        if (moveDirection.x > 0)
+        {
+            AttackAreaRight.GetComponent<DamageInfo>().playerDamageAmount = attackDamage[attackIndex];
+            AttackAreaRight.enabled = true;
+        }
+        else
+        {
+            AttackAreaLeft.GetComponent<DamageInfo>().playerDamageAmount = attackDamage[attackIndex];
+            AttackAreaLeft.enabled = true;
+        }
+    }
+
+    public void DisableAttackCollider()
+    {
+        AttackAreaLeft.enabled = false;
+        AttackAreaRight.enabled = false;
+    }
+
 }
+

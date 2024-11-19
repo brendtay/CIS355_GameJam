@@ -18,6 +18,7 @@ public class EnemyAI : MonoBehaviour
     public Collider2D AttackAreaRight;     // Enemy's right attack collider
     public GameObject heart;               // Heart prefab to spawn upon enemy death
     public float heartDropChance = 50.0f;  // Percentage chance to drop a heart, default is 50%
+    public float timeBeforeAttack = 0.5f;  // How long the animation takes before it swings
 
     private Transform player;              // Reference to the player's position
     private float startHealth = 0;
@@ -27,15 +28,16 @@ public class EnemyAI : MonoBehaviour
     private bool isAttacking = false;      // Flag to check if enemy is currently attacking
     private float lastAttackTime;          // Tracks the last attack time
 
-   
+
     private float lastDamageTime = 0;      // Tracks the last damage time
     private Animator animator;
+    private PlayerMovement playerScript;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform; // Automatically find the player
         rb = GetComponent<Rigidbody2D>();
-      
+        playerScript = player.GetComponent<PlayerMovement>();
 
         // Disable both attack colliders initially
         AttackAreaLeft.enabled = false;
@@ -56,7 +58,6 @@ public class EnemyAI : MonoBehaviour
             // Move towards the player if outside stop distance
             moveDirection = (player.position - transform.position).normalized;
             rb.velocity = moveDirection * speed;
-            //enemyAnimation.UpdateMoveDirection(moveDirection.x); 
             animator.SetFloat("Move_X", moveDirection.x);
         }
         else
@@ -74,29 +75,12 @@ public class EnemyAI : MonoBehaviour
     {
         isAttacking = true;
         lastAttackTime = Time.time;
-        TriggerAttack();
+        TriggerAttack(); // This will play the attack animation
 
-        yield return new WaitForSeconds(0.2f); // Adjust based on animation timing
+        // Wait for the attack animation to finish
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
-        // Determine the facing direction and enable the appropriate attack area
-        if (moveDirection.x > 0)
-        {
-            AttackAreaRight.GetComponent<DamageInfo>().enemyDamageAmount = attackDamage;
-            AttackAreaRight.enabled = true;
-        }
-        else
-        {
-            AttackAreaLeft.GetComponent<DamageInfo>().enemyDamageAmount = attackDamage;
-            AttackAreaLeft.enabled = true;
-        }
-
-        yield return new WaitForSeconds(0.1f); // Duration of the attack hitbox
-
-        // Disable both attack areas after the attack completes
-        AttackAreaLeft.enabled = false;
-        AttackAreaRight.enabled = false;
-
-        isAttacking = false; // Reset attacking flag after attack
+        isAttacking = false;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -122,11 +106,13 @@ public class EnemyAI : MonoBehaviour
             if (health > 0)
             {
                 TriggerHit(); // Play hit reaction animation
-                //Debug.Log("Enemy hit");
+                              //Debug.Log("Enemy hit");
+
             }
             else
             {
                 Die();
+                playerScript.IncrementPowerup();
             }
         }
     }
@@ -166,5 +152,24 @@ public class EnemyAI : MonoBehaviour
     private void TriggerDeath()
     {
         animator.SetTrigger("Death");
+    }
+    public void EnableAttackCollider()
+    {
+        if (moveDirection.x > 0)
+        {
+            AttackAreaRight.GetComponent<DamageInfo>().enemyDamageAmount = attackDamage;
+            AttackAreaRight.enabled = true;
+        }
+        else
+        {
+            AttackAreaLeft.GetComponent<DamageInfo>().enemyDamageAmount = attackDamage;
+            AttackAreaLeft.enabled = true;
+        }
+    }
+
+    public void DisableAttackCollider()
+    {
+        AttackAreaLeft.enabled = false;
+        AttackAreaRight.enabled = false;
     }
 }

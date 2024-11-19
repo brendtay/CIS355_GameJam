@@ -40,14 +40,15 @@ public class ChatTutorialManager : MonoBehaviour
         // Load initial tutorial messages (can be customized per level or scene)
         LoadTutorialMessages(new string[]
         {
-            "Welcome! Warrier! thank you volentering!",
-            "Im Lyra I will be helping",
-            "First things first lets teach you how to play!",
-            "Use WASD to move around",
+            "Welcome, brave warrior!",
+            "Thank you for volunteering on this journey!",
+            "I'm Lyra, and I'll be guiding you.",
+            "Let’s start by learning the basics.",
+            "Use WASD to move around.",
             "Press Space to jump.",
             "Use the Up Arrow for a medium attack.",
-            "Try the Left Arrow for a light attack.",
-            "Press the Right Arrow to unleash a heavy attack.",
+            "Try the Left Arrow for a quick light attack.",
+            "Press the Right Arrow for a powerful heavy attack.",
             "Hold the Down Arrow to raise your shield.",
             "Now, let’s put those skills to the test.",
             "I’ll summon some enemies!"
