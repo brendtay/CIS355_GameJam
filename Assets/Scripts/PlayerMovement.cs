@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
         startHealth = playerHealth;
         powerupBar.fillAmount = 0f; 
+        DisableAttackCollider();
     }
 
     void Update()
