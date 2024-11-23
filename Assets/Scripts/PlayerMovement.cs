@@ -65,22 +65,20 @@ public class PlayerMovement : MonoBehaviour
         AttackAreaLeft.enabled = false;
         AttackAreaRight.enabled = false;
 
-        // Initialize health and UI
-        startHealth = gameManager.startPlayerHealth; // Get the starting health from GameManager
-        playerHealth = startHealth; // Set player's health to full
-        healthBar.fillAmount = 1f; // Set health bar to full
+        if (gameManager != null)
+        {
+            // Load saved state from GameManager
+            gameManager.LoadPlayerState(this);
+        }
 
-        // Initialize power-up UI
-        powerupBar.fillAmount = 0f;
-        currentPowerup = gameManager.currentPowerUpStore;
-
-        heartsInUI = gameManager.heartsInUIStore;
+        // Initialize UI and other variables
+        healthBar.fillAmount = playerHealth / startHealth;
+        powerupBar.fillAmount = currentPowerup / maxPowerup;
         UpdateHeartsUI();
-        UpdatePowerupUI();
-
         endGameScreen.SetActive(false);
         DisableAttackCollider();
     }
+
 
     void Update()
     {
