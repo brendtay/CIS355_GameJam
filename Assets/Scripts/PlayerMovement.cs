@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -27,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public float powerupIncrement = 10f; // Amount to increase per successful hit
 
 
-    private float startHealth = 0;
+    private float startHealth = 10;
 
     private Rigidbody2D rigidbody2d;
     private Vector2 move;
@@ -51,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
     private float[] lastAttackTime = { 0f, 0f, 0f };
     private GameManager gameManager;
 
+    public GameObject endGameScreen;
+
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -62,11 +65,21 @@ public class PlayerMovement : MonoBehaviour
         AttackAreaLeft.enabled = false;
         AttackAreaRight.enabled = false;
 
-        startHealth = playerHealth;
-        powerupBar.fillAmount = 0f; 
-        DisableAttackCollider();
+        // Initialize health and UI
+        startHealth = gameManager.startPlayerHealth; // Get the starting health from GameManager
+        playerHealth = startHealth; // Set player's health to full
+        healthBar.fillAmount = 1f; // Set health bar to full
 
+        // Initialize power-up UI
+        powerupBar.fillAmount = 0f;
+        currentPowerup = gameManager.currentPowerUpStore;
+
+        heartsInUI = gameManager.heartsInUIStore;
         UpdateHeartsUI();
+        UpdatePowerupUI();
+
+        endGameScreen.SetActive(false);
+        DisableAttackCollider();
     }
 
     void Update()
@@ -165,7 +178,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.CompareTag("EndLevel") && gameManager.levelComplete)
         {
-            gameManager.LoadNextLevel(); // Call the end level function in GameManager
+            LoadNextLevel(); // Call the end level function in GameManager
         }
 
         if (other.CompareTag("Health"))
@@ -227,7 +240,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.Log("Player has died.");
         animator.SetTrigger("Death");
-        gameManager.GameOver();
+        GameOver();
     }
     public void IncrementPowerup()
     {
@@ -294,6 +307,64 @@ public class PlayerMovement : MonoBehaviour
             UpdateHeartsUI();
         }
     }
+    public void GameOver()
+    {
+        endGameScreen.SetActive(true); // Show the end game screen
+        Time.timeScale = 0;
+    }
 
+    public void LoadMainScreen()
+    {
+        SceneManager.LoadScene("MainScreen");
+    }
+
+    public void LoadNextLevel()
+    {
+        Time.timeScale = 1;
+
+        // Save player's state to GameManager
+        if (gameManager != null)
+        {
+            gameManager.SavePlayerState(this);
+        }
+
+        // Update the level and load the next scene
+        string currentLevelName = SceneManager.GetActiveScene().name;
+        int nextLevel = gameManager != null ? gameManager.currentLevel + 1 : 1;
+
+        if (currentLevelName == "HowToPlay")
+        {
+            SceneManager.LoadScene("MainScreen");
+        }
+        else
+        {
+            SceneManager.LoadScene("Level " + nextLevel);
+        }
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1;
+
+        // Reset player's state
+        if (gameManager != null)
+        {
+            gameManager.playerHealthStore = gameManager.startPlayerHealth;
+            gameManager.currentPowerUpStore = 0f;
+            gameManager.heartsInUIStore = 0;
+        }
+
+        // Reload the initial scene
+        string currentLevelName = SceneManager.GetActiveScene().name;
+
+        if (currentLevelName == "HowToPlay")
+        {
+            SceneManager.LoadScene("HowToPlay");
+        }
+        else
+        {
+            SceneManager.LoadScene("Level 1");
+        }
+    }
 }
 

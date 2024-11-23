@@ -4,16 +4,53 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-   
-    public GameObject endGameScreen;
+    public static GameManager Instance; // Singleton instance
+
+    public float playerHealthStore;
+    public float currentPowerUpStore;
+    public int heartsInUIStore;
+    public float startPlayerHealth = 10f;
+
     public string currentLevelName;
     public bool levelComplete;
-    int currentLevel = 1;
-    
+    public int currentLevel = 1;
+
+    private PlayerMovement player;
+
+    void Awake()
+    {
+        // Implement Singleton pattern
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Persist this object between scenes
+        }
+        else
+        {
+            Destroy(gameObject); // Ensure there's only one instance of GameManager
+        }
+    }
+
+    public void SavePlayerState(PlayerMovement player)
+    {
+        // Save the player's state
+        playerHealthStore = player.playerHealth;
+        currentPowerUpStore = player.powerupIncrement;
+        heartsInUIStore = player.heartsInUI;
+    }
+
+    public void LoadPlayerState(PlayerMovement player)
+    {
+        // Restore the player's state
+        player.playerHealth = playerHealthStore;
+        player.powerupIncrement = currentPowerUpStore;
+        player.heartsInUI = heartsInUIStore;
+    }
+
     void Start()
     {
-        endGameScreen.SetActive(false);
         levelComplete = false;
+        playerHealthStore = startPlayerHealth; // Initialize player health in GameManager
     }
 
     public void StartGame()
@@ -23,54 +60,12 @@ public class GameManager : MonoBehaviour
         currentLevel = 1;
     }
 
-    public void LoadHowToPlay()
+    public void HowToPlay()
     {
         SceneManager.LoadScene("HowToPlay");
         Time.timeScale = 1;
     }
-    public void LoadMainScreen()
-    {
-        SceneManager.LoadScene("MainScreen");
-    }
-    
-    public void GameOver()
-    {
-        endGameScreen.SetActive(true); // Show the end game screen
-        Time.timeScale = 0;
-    }
 
-    public void RestartGame()
-    {
-        // Reload the current level and reset time scale
-        Time.timeScale = 1;
-        currentLevelName = SceneManager.GetActiveScene().name;
-        currentLevel = 1;
-        if(currentLevelName == "HowToPlay")
-        {
-            SceneManager.LoadScene("HowToPlay");
-        }
-        else
-        {
-            SceneManager.LoadScene("Level 1");
-        }
-        
-    }
-
-    public void LoadNextLevel()
-    {
-        Time.timeScale = 1;
-        currentLevelName = SceneManager.GetActiveScene().name;
-        currentLevel = 1;
-        currentLevel++;
-        if(currentLevelName == "HowToPlay")
-        {
-            LoadMainScreen();
-        }
-        else
-        {   
-            SceneManager.LoadScene("Level " + currentLevel); 
-        }
-
-        
-    }
+   
+   
 }

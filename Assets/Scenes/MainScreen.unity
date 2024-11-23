@@ -1185,6 +1185,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce845a9e5f1e00f47990332a85dc4687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealthStore: 0
+  currentPowerUpStore: 0
+  heartsInUIStore: 0
+  startPlayerHealth: 10
+  currentLevelName: 
+  levelComplete: 0
+  currentLevel: 1
 --- !u!4 &1263245169
 Transform:
   m_ObjectHideFlags: 0
@@ -1670,7 +1677,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1263245168}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadHowToPlay
+        m_MethodName: HowToPlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
