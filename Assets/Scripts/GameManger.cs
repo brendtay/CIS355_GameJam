@@ -6,9 +6,9 @@ public class GameManager : MonoBehaviour
 {
    
     public GameObject endGameScreen;
-    public string CurrentLevel;
-    public bool levelComplete; 
-  
+    public string currentLevelName;
+    public bool levelComplete;
+    int currentLevel = 1;
     
     void Start()
     {
@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Level 1");
         Time.timeScale = 1;
+        currentLevel = 1;
     }
 
     public void LoadHowToPlay()
@@ -42,8 +43,9 @@ public class GameManager : MonoBehaviour
     {
         // Reload the current level and reset time scale
         Time.timeScale = 1;
-        CurrentLevel = SceneManager.GetActiveScene().name;
-        if(CurrentLevel == "HowToPlay")
+        currentLevelName = SceneManager.GetActiveScene().name;
+        currentLevel = 1;
+        if(currentLevelName == "HowToPlay")
         {
             SceneManager.LoadScene("HowToPlay");
         }
@@ -57,15 +59,18 @@ public class GameManager : MonoBehaviour
     public void LoadNextLevel()
     {
         Time.timeScale = 1;
-        CurrentLevel = SceneManager.GetActiveScene().name;
-        if(CurrentLevel == "HowToPlay")
+        currentLevelName = SceneManager.GetActiveScene().name;
+
+        currentLevel++;
+        if(currentLevelName == "HowToPlay")
         {
             LoadMainScreen();
         }
         else
         {   
-            SceneManager.LoadScene("Level " + CurrentLevel); 
+            SceneManager.LoadScene("Level " + currentLevel); 
         }
+
         
     }
 }
