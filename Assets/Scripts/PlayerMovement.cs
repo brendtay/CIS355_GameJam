@@ -40,6 +40,14 @@ public class PlayerMovement : MonoBehaviour
     public Collider2D AttackAreaLeft;
     public Collider2D AttackAreaRight;
 
+    public int heartsInUI = 0;
+    // Reference to heart UI elements
+    public SpriteRenderer[] heartRenderers;
+
+    // References to the full and empty heart sprites
+    public Sprite fullHeartSprite;
+    public Sprite emptyHeartSprite;
+
     private float[] lastAttackTime = { 0f, 0f, 0f };
     private GameManager gameManager;
 
@@ -57,12 +65,21 @@ public class PlayerMovement : MonoBehaviour
         startHealth = playerHealth;
         powerupBar.fillAmount = 0f; 
         DisableAttackCollider();
+
+        UpdateHeartsUI();
     }
 
     void Update()
     {
         Movement();
-        
+
+        // Check for the "E" key to use a heart and heal
+        if (Input.GetKeyDown(KeyCode.E) && heartsInUI > 0)
+        {
+            RemoveHeart(); // Remove a heart
+            HealPlayer(2f); // Heal the player (adjust the value as needed)
+        }
+
     }
 
     void FixedUpdate()
@@ -146,19 +163,15 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Check if the player collided with a health item
-        if (other.CompareTag("Health") && playerHealth < startHealth)
-        {
-            // Restore health, but don't exceed max health
-            HealPlayer(healthRestoreAmount);
-
-            // Optionally, destroy the health item
-            Destroy(other.gameObject);
-        }
-
         if (other.CompareTag("EndLevel") && gameManager.levelComplete)
         {
             gameManager.LoadNextLevel(); // Call the end level function in GameManager
+        }
+
+        if (other.CompareTag("Health"))
+        {
+            AddHeart(); // Add a heart to the UI
+            Destroy(other.gameObject); // Remove the heart object from the scene
         }
     }
     void TriggerJump()
@@ -201,14 +214,8 @@ public class PlayerMovement : MonoBehaviour
     {
         float targetHealth = Mathf.Min(playerHealth + healAmount, startHealth);
 
-
-        playerHealth += healAmount;
-        if (playerHealth > startHealth)
-        {
-            playerHealth = startHealth;
-        }
-
-        healthBar.fillAmount = targetHealth / startHealth;
+        playerHealth = targetHealth; // Update player's health
+        healthBar.fillAmount = playerHealth / startHealth; // Update health bar UI
     }
 
     private void DecreaseHealthUI()
@@ -257,6 +264,35 @@ public class PlayerMovement : MonoBehaviour
     {
         AttackAreaLeft.enabled = false;
         AttackAreaRight.enabled = false;
+    }
+
+    public void UpdateHeartsUI()
+    {
+        for (int i = 0; i < heartRenderers.Length; i++)
+        {
+            // Set the sprite to full heart if index is less than heartsInUI, else set it to empty heart
+            heartRenderers[i].sprite = i < heartsInUI ? fullHeartSprite : emptyHeartSprite;
+        }
+    }
+
+    // Example: Increase hearts and update UI
+    public void AddHeart()
+    {
+        if (heartsInUI < heartRenderers.Length)
+        {
+            heartsInUI++;
+            UpdateHeartsUI();
+        }
+    }
+
+    // Example: Decrease hearts and update UI
+    public void RemoveHeart()
+    {
+        if (heartsInUI > 0)
+        {
+            heartsInUI--;
+            UpdateHeartsUI();
+        }
     }
 
 }

@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         currentLevelName = SceneManager.GetActiveScene().name;
-
+        currentLevel = 1;
         currentLevel++;
         if(currentLevelName == "HowToPlay")
         {
