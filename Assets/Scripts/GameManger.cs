@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public bool levelComplete;
     public int currentLevel = 1;
 
-    private PlayerMovement player;
+   
 
     void Awake()
     {
