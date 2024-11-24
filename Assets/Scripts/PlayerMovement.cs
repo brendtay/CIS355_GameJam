@@ -408,12 +408,14 @@ public class PlayerMovement : MonoBehaviour
     {
         Time.timeScale = 1;
         isAlive = true; 
+        
         // Reset player's state
         if (gameManager != null)
         {
             gameManager.playerHealthStore = gameManager.startPlayerHealth;
             gameManager.currentPowerUpStore = 0f;
             gameManager.heartsInUIStore = 0;
+            gameManager.currentLevel = 1; 
         }
 
         // Reload the initial scene

@@ -445,8 +445,10 @@ MonoBehaviour:
   enemies:
   - {fileID: 7072741011685782256, guid: 742783cb168f5f440a9d877298b674d0, type: 3}
   - {fileID: 5117842550951103893, guid: 126c8512c5931e54fa8ec53cd4f85ce2, type: 3}
+  - {fileID: 8352615381377669621, guid: e906515b6109db444abf411e25bad092, type: 3}
   spawnPoints:
   - {fileID: 590106032}
+  - {fileID: 1287637710}
   - {fileID: 1287637710}
   wizard: {fileID: 1077654113}
   endLevelCollision: {fileID: 0}

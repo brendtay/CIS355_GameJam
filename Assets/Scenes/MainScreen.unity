@@ -1234,7 +1234,7 @@ MonoBehaviour:
   heartsInUIStore: 0
   startPlayerHealth: 10
   currentLevelName: 
-  currentLevel: 1
+  currentLevel: 0
   gameOver: 0
 --- !u!4 &1263245169
 Transform:

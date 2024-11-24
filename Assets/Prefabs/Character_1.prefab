@@ -313,13 +313,13 @@ MonoBehaviour:
   isBlocking: 0
   hitCooldown: 0.5
   attackTime:
-  - 0.7
+  - 0.25
   - 0.5
-  - 0.2
+  - 0.35
   attackDamage:
-  - 2
+  - 1
+  - 2.75
   - 1.5
-  - 0.8
   MoveAction:
     m_Name: Move
     m_Type: 0

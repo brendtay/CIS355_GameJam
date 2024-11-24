@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using static Unity.Burst.Intrinsics.X86;
+using Unity.VisualScripting;
 
 public class ChatTutorialManager : MonoBehaviour
 {
@@ -46,23 +48,29 @@ public class ChatTutorialManager : MonoBehaviour
             "Let’s start by learning the basics.",
             "Use WASD to move around.",
             "Press Space to jump.",
-            "Use the Up Arrow for a medium attack.",
-            "Try the Left Arrow for a quick light attack.",
-            "Press the Right Arrow for a powerful heavy attack.",
+            "Use the Up Arrow for a fast attack.",
+            "Try the Left Arrow for a slow heavy attack.",
+            "Press the Right Arrow for a medium attack.",
             "Hold the Down Arrow to raise your shield.",
             "Now, let’s put those skills to the test.",
-            "I’ll summon some enemies!"
+            "I’ll summon some enemies!",
+            "If you see a enemy dropped a heart!",
+            "Walk over it to pick it up",
+            "You can store up to 3 hearts if your health is full",
+            "You can press E at any time to use one!",
+            "The blue bar is your powerup meter",
+            "When it is full press q to activate it",
+            "While it is active you do 2.5x the damage!",
+            "And another note: if you get annoyed of",
+            "Me you can press enter at any time to skip these"
         });
 
         // Load additional secondary messages
         LoadSecondaryMessages(new string[]
         {
-            "If you saw a enemy dropped a heart!",
-            "Walk over it to pick it up",
-            "You can store up to 3 hearts if your health is full",
-            "You can press E at any time to use one!",
             "Congradulations you finished the tutorial!",
-            "Lets continue into this journy."
+            "Lets continue into this journy.",
+            "Continue to the next level by walking right!"
         });
 
         // Start displaying messages
@@ -142,7 +150,7 @@ public class ChatTutorialManager : MonoBehaviour
         {
             // Display the next message from the tutorial queue
             chatText.text = tutorialMessages.Dequeue();
-            StartCoroutine(DisplayNextMessageWithDelay(5f)); // Adjust delay time as needed
+            StartCoroutine(DisplayNextMessageWithDelay(2.5f)); // Adjust delay time as needed
         }
         else
         {
