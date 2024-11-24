@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ public class EnemyAI : MonoBehaviour
     public float health = 100;             // Enemy's health, set to max health (e.g., 100)
     public float attackCooldown = 1.0f;    // Cooldown time between attacks
     public float attackDamage = 1.0f;
-    public float deathAnimationTime = 1.0f;
+
     public float damageCooldown = 0.4f;    // Cooldown time between damage instances
     public Image healthBar;                // Reference to the health bar UI image
     public Collider2D AttackAreaLeft;      // Enemy's left attack collider
@@ -141,8 +142,10 @@ public class EnemyAI : MonoBehaviour
             Instantiate(heart, transform.position, Quaternion.identity); // Spawn the heart at the enemy's position
             Debug.Log("enemy dropped health!");
         }
-
-        Destroy(gameObject, deathAnimationTime); // Adjust delay to match death animation length
+    }
+    public void DestroyEnemy()
+    {
+        Destroy(gameObject);
     }
     private void TriggerAttack()
     {
