@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource playerAudio;
 
     private bool isAlive = true;
+    private bool isAttacking = false; // Flag to prevent attack spammin
 
     void Start()
     {
@@ -123,28 +124,36 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator TriggerAttack(int attackIndex)
     {
+        if (isAttacking) // Prevent triggering another attack
+            yield break;
+
+        isAttacking = true; // Set the attacking flag
         playerAudio.PlayOneShot(swordSwing, 1.5f);
-        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        // Set the appropriate trigger and enable colliders based on the attack index
-        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        // Trigger the attack animation based on the attack index
+        animator.SetTrigger($"Attack {attackIndex + 1}");
 
-        // Set the appropriate trigger for the attack based on the attack index
-        if (!stateInfo.IsName($"Attack {attackIndex + 1}"))
-        {
-            animator.SetTrigger($"Attack {attackIndex + 1}");
-        }
+        // Enable the attack collider for the current attack
+        EnableAttackCollider(attackIndex);
 
-        // Wait for the attack animation to finish
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        // Wait for the duration of the attack animation
+        float attackDuration = attackTime[attackIndex];
+        yield return new WaitForSeconds(attackDuration);
+
+        // Disable the attack collider after the animation
         DisableAttackCollider();
+
+        // Wait for the attack cooldown to complete
+        yield return new WaitForSeconds(attackTime[attackIndex]);
+
+        isAttacking = false; // Reset the attacking flag
     }
     void Movement()
     {
         move = MoveAction.ReadValue<Vector2>();
         if (!isAlive)
         {
-            return; 
+            return;
         }
         if (move.sqrMagnitude > 0.0f)
         {

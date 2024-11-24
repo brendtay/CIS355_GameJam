@@ -2249,9 +2249,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 660677598}
     - target: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
+      propertyPath: playerHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
       propertyPath: endGameScreen
       value: 
       objectReference: {fileID: 968759484}
+    - target: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
+      propertyPath: attackTime.Array.data[0]
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
+      propertyPath: attackTime.Array.data[1]
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
+      propertyPath: attackTime.Array.data[2]
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
       propertyPath: heartRenderers.Array.data[0]
       value: 
@@ -2266,7 +2282,7 @@ PrefabInstance:
       objectReference: {fileID: 1417154335}
     - target: {fileID: 5859040903642971328, guid: beba2811e150e1541954fd8927147978, type: 3}
       propertyPath: m_Name
-      value: Character_1
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7290320156336693040, guid: beba2811e150e1541954fd8927147978, type: 3}
       propertyPath: m_LocalPosition.x
