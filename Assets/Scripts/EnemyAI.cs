@@ -33,6 +33,9 @@ public class EnemyAI : MonoBehaviour
     private Animator animator;
     private PlayerMovement playerScript;
 
+    public float powerUpValue = 0.5f;
+    
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform; // Automatically find the player
@@ -112,7 +115,7 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 Die();
-                playerScript.IncrementPowerup();
+                
             }
         }
     }
@@ -129,6 +132,8 @@ public class EnemyAI : MonoBehaviour
         TriggerDeath(); // Trigger death animation
         rb.velocity = Vector2.zero;
 
+        playerScript.IncrementPowerup(powerUpValue);
+        
         // Check if a heart should be dropped based on heartDropChance
         float dropChance = Random.Range(0f, 100f);
         if (dropChance <= heartDropChance)

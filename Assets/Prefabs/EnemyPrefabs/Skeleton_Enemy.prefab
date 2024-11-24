@@ -500,6 +500,7 @@ MonoBehaviour:
   heart: {fileID: 1901031415021653118, guid: 77c361a16282be74fa14033e264511b2, type: 3}
   heartDropChance: 100
   timeBeforeAttack: 0.9
+  powerUpValue: 25
 --- !u!61 &2255263013619344840
 BoxCollider2D:
   m_ObjectHideFlags: 0

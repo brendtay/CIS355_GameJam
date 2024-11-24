@@ -554,6 +554,7 @@ MonoBehaviour:
   heart: {fileID: 1901031415021653118, guid: 77c361a16282be74fa14033e264511b2, type: 3}
   heartDropChance: 50
   timeBeforeAttack: 0.6
+  powerUpValue: 15
 --- !u!50 &8528271761988116694
 Rigidbody2D:
   serializedVersion: 4

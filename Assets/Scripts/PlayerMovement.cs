@@ -23,9 +23,9 @@ public class PlayerMovement : MonoBehaviour
     public float scoreToPowerUp = 10f;
 
     public Image powerupBar;       // Reference to the power-up bar UI image
-    private float currentPowerup = 0f;
+    public float currentPowerUpValue = 0f;
     private float maxPowerup = 100f;
-    public float powerupIncrement = 10f; // Amount to increase per successful hit
+  
 
 
     private float startHealth = 10;
@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Initialize UI and other variables
         healthBar.fillAmount = playerHealth / startHealth;
-        powerupBar.fillAmount = currentPowerup / maxPowerup;
+        powerupBar.fillAmount = currentPowerUpValue / maxPowerup;
         UpdateHeartsUI();
         endGameScreen.SetActive(false);
         DisableAttackCollider();
@@ -240,16 +240,21 @@ public class PlayerMovement : MonoBehaviour
         animator.SetTrigger("Death");
         GameOver();
     }
-    public void IncrementPowerup()
+    public void IncrementPowerup(float powerUpValue)
     {
-        currentPowerup += powerupIncrement;
-        if (currentPowerup > maxPowerup) currentPowerup = maxPowerup;
+       currentPowerUpValue += powerUpValue;
+
+        // Clamp currentPowerup to the maximum allowed value
+        this.currentPowerUpValue = Mathf.Min(this.currentPowerUpValue, maxPowerup);
+
+        // Update the UI to reflect the new powerup value
         UpdatePowerupUI();
     }
 
-    private void UpdatePowerupUI()
+
+    public void UpdatePowerupUI()
     {
-        powerupBar.fillAmount = currentPowerup / maxPowerup;
+        powerupBar.fillAmount = currentPowerUpValue / maxPowerup;
     }
 
     private void UsePowerUp()

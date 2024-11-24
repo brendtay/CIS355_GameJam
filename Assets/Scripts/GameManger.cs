@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         // Save the player's state
         playerHealthStore = player.playerHealth;
-        currentPowerUpStore = player.powerupIncrement;
+        currentPowerUpStore = player.currentPowerUpValue;
         heartsInUIStore = player.heartsInUI;
     }
 
@@ -43,8 +43,10 @@ public class GameManager : MonoBehaviour
     {
         // Restore the player's state
         player.playerHealth = playerHealthStore;
-        player.powerupIncrement = currentPowerUpStore;
+        player.currentPowerUpValue = currentPowerUpStore;
         player.heartsInUI = heartsInUIStore;
+
+        player.UpdatePowerupUI();
     }
 
     void Start()
