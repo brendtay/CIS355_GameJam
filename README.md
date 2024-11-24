@@ -37,6 +37,8 @@
 
 final boss - https://lionheart963.itch.io/wizard
 
+bringer of death - https://clembod.itch.io/bringer-of-death-free/download/eyJpZCI6OTgwNzM4LCJleHBpcmVzIjoxNzMyNDcyODM4fQ%3d%3d.HK%2fnzfsbeQ78CxjkpFdzH%2fd7i1A%3d
+
 #### Sounds Used
 1. **Health Use Sound**  
    Source: [Success Sound Effect](https://pixabay.com/sound-effects/success-02-68338/)
