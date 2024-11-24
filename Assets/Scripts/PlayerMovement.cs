@@ -55,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
     public GameObject endGameScreen;
     public LevelCompleteManager chatManager; 
 
+    private float powerUpDamageMultiplyer = 1f; 
+
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -90,6 +92,11 @@ public class PlayerMovement : MonoBehaviour
         {
             RemoveHeart(); // Remove a heart
             HealPlayer(2f); // Heal the player (adjust the value as needed)
+        }
+
+        if (currentPowerUpValue == maxPowerup && Input.GetKeyDown(KeyCode.Q)) // Only activate if power-up meter is full
+        {
+            StartCoroutine(ActivatePowerUp());
         }
 
     }
@@ -263,21 +270,45 @@ public class PlayerMovement : MonoBehaviour
         powerupBar.fillAmount = currentPowerUpValue / maxPowerup;
     }
 
-    private void UsePowerUp()
+    private IEnumerator ActivatePowerUp()
     {
+        powerUpDamageMultiplyer = 2.5f; // Set the damage multiplier
+        Debug.Log("Power-up activated!");
 
+        float duration = 5f; // Duration for the power-up
+        float elapsedTime = 0f; // Track elapsed time
+        float initialPowerUpValue = currentPowerUpValue;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            // Gradually reduce the power-up meter
+            currentPowerUpValue = Mathf.Lerp(initialPowerUpValue, 0f, elapsedTime / duration);
+            UpdatePowerupUI(); // Update the UI to reflect the meter drain
+
+            yield return null; // Wait for the next frame
+        }
+
+        // Ensure the power-up meter is fully drained at the end
+        currentPowerUpValue = 0f;
+        UpdatePowerupUI();
+
+        // Reset the damage multiplier
+        powerUpDamageMultiplyer = 1f;
+        Debug.Log("Power-up ended.");
     }
 
     public void EnableAttackCollider(int attackIndex)
     {
         if (moveDirection.x > 0)
         {
-            AttackAreaRight.GetComponent<DamageInfo>().playerDamageAmount = attackDamage[attackIndex];
+            AttackAreaRight.GetComponent<DamageInfo>().playerDamageAmount = attackDamage[attackIndex] * powerUpDamageMultiplyer;
             AttackAreaRight.enabled = true;
         }
         else
         {
-            AttackAreaLeft.GetComponent<DamageInfo>().playerDamageAmount = attackDamage[attackIndex];
+            AttackAreaLeft.GetComponent<DamageInfo>().playerDamageAmount = attackDamage[attackIndex] * powerUpDamageMultiplyer;
             AttackAreaLeft.enabled = true;
         }
     }
