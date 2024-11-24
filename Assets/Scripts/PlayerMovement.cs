@@ -203,6 +203,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.CompareTag("EndLevel") && chatManager.levelComplete)
         {
+            gameManager.currentLevel++; 
             LoadNextLevel(); // Call the end level function in GameManager
         }
 
@@ -391,7 +392,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Update the level and load the next scene
         string currentLevelName = SceneManager.GetActiveScene().name;
-        int nextLevel = gameManager != null ? gameManager.currentLevel + 1 : 1;
+        
 
         if (currentLevelName == "HowToPlay")
         {
@@ -399,7 +400,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Level " + nextLevel);
+            SceneManager.LoadScene("Level " + gameManager.currentLevel);
         }
     }
 

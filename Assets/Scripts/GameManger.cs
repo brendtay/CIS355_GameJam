@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public string currentLevelName;
    
-    public int currentLevel = 1;
+    public int currentLevel = 0;
     public bool gameOver = false; 
    
 
