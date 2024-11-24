@@ -649,6 +649,7 @@ MonoBehaviour:
   timeBeforeAttack: 0.5
   powerUpValue: 15
   playerHitSound: {fileID: 8300000, guid: 3b3f4294b7575964685bc8916f6832e7, type: 3}
+  DeathSound: {fileID: 8300000, guid: 293813963d5de3a47851d33fe3d35aec, type: 3}
 --- !u!82 &-7702989849810735482
 AudioSource:
   m_ObjectHideFlags: 0

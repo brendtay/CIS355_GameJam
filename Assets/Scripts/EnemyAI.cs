@@ -38,6 +38,7 @@ public class EnemyAI : MonoBehaviour
 
     
     public AudioClip playerHitSound;
+    public AudioClip DeathSound;
     private AudioSource enemyAudio;
 
     void Start()
@@ -136,6 +137,7 @@ public class EnemyAI : MonoBehaviour
         isDead = true;
         TriggerDeath(); // Trigger death animation
         rb.velocity = Vector2.zero;
+        enemyAudio.PlayOneShot(DeathSound, 1.0f);
 
         playerScript.IncrementPowerup(powerUpValue);
         

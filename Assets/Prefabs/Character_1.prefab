@@ -387,6 +387,7 @@ MonoBehaviour:
   chatManager: {fileID: 0}
   heartSound: {fileID: 8300000, guid: de8229e8995a9974297b0ade82b5bcf9, type: 3}
   hurtSound: {fileID: 8300000, guid: c9e1a5984526aae4592d3e6026788182, type: 3}
+  swordSwing: {fileID: 8300000, guid: 213c0550b4970444ea08b9e59060bf29, type: 3}
 --- !u!50 &8638413351181972811
 Rigidbody2D:
   serializedVersion: 4

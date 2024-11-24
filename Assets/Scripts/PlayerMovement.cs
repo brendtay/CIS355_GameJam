@@ -59,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioClip heartSound; 
     public AudioClip hurtSound;
+    public AudioClip swordSwing;
     private AudioSource playerAudio;
 
     private bool isAlive = true;
@@ -122,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator TriggerAttack(int attackIndex)
     {
+        playerAudio.PlayOneShot(swordSwing, 1.5f);
         stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
         // Set the appropriate trigger and enable colliders based on the attack index
