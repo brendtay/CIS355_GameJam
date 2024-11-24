@@ -37,6 +37,8 @@
 
 final boss - https://lionheart963.itch.io/wizard
 
+bringer of death - https://clembod.itch.io/bringer-of-death-free/download/eyJpZCI6OTgwNzM4LCJleHBpcmVzIjoxNzMyNDcyODM4fQ%3d%3d.HK%2fnzfsbeQ78CxjkpFdzH%2fd7i1A%3d
+
 #### Sounds Used
 1. **Health Use Sound**  
    Source: [Success Sound Effect](https://pixabay.com/sound-effects/success-02-68338/)
@@ -51,6 +53,8 @@ final boss - https://lionheart963.itch.io/wizard
 4. **Level Music**  
    Track: "8 Bit Adventure"  
    Source: [Fesliyan Studios](https://www.FesliyanStudios.com)
+
+   Boss level mustic Boss_Time_-_www.FesliyanStudios.com.mp3 https://www.FesliyanStudios.com 
 
 #### Unused Assets
 1. **Currently Unused Character**  
