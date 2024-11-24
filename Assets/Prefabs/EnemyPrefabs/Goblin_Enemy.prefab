@@ -639,7 +639,6 @@ MonoBehaviour:
   health: 3
   attackCooldown: 1
   attackDamage: 2
-  deathAnimationTime: 1.75
   damageCooldown: 0.4
   healthBar: {fileID: 93803284667028354}
   AttackAreaLeft: {fileID: 667792990440776641}
@@ -647,7 +646,7 @@ MonoBehaviour:
   heart: {fileID: 1901031415021653118, guid: 77c361a16282be74fa14033e264511b2, type: 3}
   heartDropChance: 50
   timeBeforeAttack: 0.5
-  powerUpValue: 10
+  powerUpValue: 15
 --- !u!1 &8947128077522718225
 GameObject:
   m_ObjectHideFlags: 0

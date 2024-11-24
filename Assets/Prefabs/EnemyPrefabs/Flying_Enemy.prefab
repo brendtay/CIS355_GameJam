@@ -546,7 +546,6 @@ MonoBehaviour:
   health: 5
   attackCooldown: 2.5
   attackDamage: 1
-  deathAnimationTime: 1
   damageCooldown: 0.4
   healthBar: {fileID: 6199709389279108708}
   AttackAreaLeft: {fileID: 1065427128598632857}
@@ -554,7 +553,7 @@ MonoBehaviour:
   heart: {fileID: 1901031415021653118, guid: 77c361a16282be74fa14033e264511b2, type: 3}
   heartDropChance: 50
   timeBeforeAttack: 0.6
-  powerUpValue: 15
+  powerUpValue: 20
 --- !u!50 &8528271761988116694
 Rigidbody2D:
   serializedVersion: 4
