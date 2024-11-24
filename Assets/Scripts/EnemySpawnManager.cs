@@ -25,11 +25,11 @@ public class EnemySpawnManager : MonoBehaviour
 
     private LevelCompleteManager chatManager;
     public bool allEnemiesSpawned = false;
+    
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         chatManager = FindObjectOfType<LevelCompleteManager>();
-       
 
         // Start the first wave
         if (waves.Length > 0)
@@ -40,10 +40,13 @@ public class EnemySpawnManager : MonoBehaviour
         {
             Debug.LogWarning("No waves configured in EnemySpawnManager.");
         }
+
     }
 
     void Update()
     {
+       
+
         // Check if we are not currently spawning a wave
         if (!isSpawningWave)
         {

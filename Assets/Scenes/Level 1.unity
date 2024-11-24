@@ -277,7 +277,7 @@ MonoBehaviour:
     spawnPoints:
     - {fileID: 590106032}
     - {fileID: 590106032}
-    delayBeforeWave: 3
+    delayBeforeWave: 8
     repeatTimes: 1
     repeatable: 1
   - waveName: SecondWave
@@ -291,6 +291,7 @@ MonoBehaviour:
     repeatTimes: 1
     repeatable: 1
   allEnemiesSpawned: 0
+  startGame: 0
 --- !u!114 &492315725 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
@@ -1743,6 +1744,10 @@ MonoBehaviour:
 '
   - To reach him we must enter the castle.
   - He will be located below it!
+  preGameMessagesArray:
+  - The castle has been taken over
+  - We must take it back and kill and hostiles
+  showPreGameMessages: 1
   levelComplete: 0
 --- !u!1 &1401696452
 GameObject:

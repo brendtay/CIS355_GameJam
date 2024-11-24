@@ -11,21 +11,36 @@ public class LevelCompleteManager : MonoBehaviour
     public GameObject wizard; // Reference to the wizard GameObject
 
     // Private variables for text
-    // Queue is provided by the .net framwork and acts like a array
     private Queue<string> levelCompleteMessages; // Queue to store level completion messages
+    private Queue<string> preGameMessages; // Queue to store pre-game messages
     private bool isDisplayingMessages = false; // Track if messages are currently being displayed
 
-    // You can set these messages in the Inspector for each level
+    // Public configuration
     [TextArea(3, 10)]
-    public string[] messagesToDisplay;
+    public string[] messagesToDisplay; // Messages for level completion
+    [TextArea(3, 10)]
+    public string[] preGameMessagesArray; // Messages for pre-game
+    public bool showPreGameMessages = false; // Toggle to enable/disable pre-game messages
     public bool levelComplete;
+
     private void Start()
     {
         levelCompleteMessages = new Queue<string>();
-        LoadLevelCompleteMessages(messagesToDisplay);
+        preGameMessages = new Queue<string>();
 
-        // Initially hide the chat box and wizard
-        StartLevel();
+        // Load messages
+        LoadMessages(preGameMessagesArray, preGameMessages);
+        LoadMessages(messagesToDisplay, levelCompleteMessages);
+
+        // Start the game
+        if (showPreGameMessages)
+        {
+            StartCoroutine(DisplayPreGameMessages());
+        }
+        else
+        {
+            StartLevel();
+        }
     }
 
     public void StartLevel()
@@ -33,6 +48,7 @@ public class LevelCompleteManager : MonoBehaviour
         chatCanvas.gameObject.SetActive(false);
         wizard.SetActive(false);
         levelComplete = false;
+  
     }
 
     private void Update()
@@ -54,17 +70,37 @@ public class LevelCompleteManager : MonoBehaviour
         }
     }
 
-    // Function to load messages into the queue
-    public void LoadLevelCompleteMessages(string[] messages)
+    // Function to load messages into a queue
+    public void LoadMessages(string[] messages, Queue<string> messageQueue)
     {
-        levelCompleteMessages.Clear();
-        foreach (string message in messages) // Runs as long as theres a next message object
+        messageQueue.Clear();
+        foreach (string message in messages)
         {
-            levelCompleteMessages.Enqueue(message); // Loads messages into queue 
+            messageQueue.Enqueue(message);
         }
     }
 
-    // Coroutine to display messages one after another with a delay
+    // Coroutine to display pre-game messages
+    public IEnumerator DisplayPreGameMessages()
+    {
+        isDisplayingMessages = true;
+        chatCanvas.gameObject.SetActive(true);
+        wizard.SetActive(true);
+
+        while (preGameMessages.Count > 0)
+        {
+            chatText.text = preGameMessages.Dequeue();
+            yield return new WaitForSecondsRealtime(2.5f); // Adjust the delay as needed
+        }
+
+        // Hide chat box and wizard, then start the level
+        chatCanvas.gameObject.SetActive(false);
+        wizard.SetActive(false);
+        isDisplayingMessages = false;
+        StartLevel();
+    }
+
+    // Coroutine to display level complete messages
     public IEnumerator DisplayLevelCompleteMessages()
     {
         isDisplayingMessages = true;
@@ -73,8 +109,8 @@ public class LevelCompleteManager : MonoBehaviour
 
         while (levelCompleteMessages.Count > 0)
         {
-            chatText.text = levelCompleteMessages.Dequeue(); //Pulls the first element of the array
-            yield return new WaitForSecondsRealtime(5f); // Adjust the delay as needed
+            chatText.text = levelCompleteMessages.Dequeue();
+            yield return new WaitForSecondsRealtime(2.5f); // Adjust the delay as needed
         }
 
         // Hide the chat box and wizard after displaying all messages
@@ -83,21 +119,19 @@ public class LevelCompleteManager : MonoBehaviour
         isDisplayingMessages = false;
 
         // Optionally, proceed to the next level or perform other actions
-        // For example:
-        // GameManager.Instance.LoadNextLevel();
     }
-
-    
 
     // Function to skip messages when Enter is pressed
     public void SkipMessages()
     {
         StopAllCoroutines();
         levelCompleteMessages.Clear();
+        preGameMessages.Clear();
         chatCanvas.gameObject.SetActive(false);
         wizard.SetActive(false);
         isDisplayingMessages = false;
     }
+
     // Method to clean up the chat display when leaving the level
     public void CleanupChat()
     {
@@ -105,10 +139,10 @@ public class LevelCompleteManager : MonoBehaviour
         {
             StopAllCoroutines();
             levelCompleteMessages.Clear();
+            preGameMessages.Clear();
             chatCanvas.gameObject.SetActive(false);
             wizard.SetActive(false);
             isDisplayingMessages = false;
         }
     }
-
 }
