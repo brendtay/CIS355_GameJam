@@ -276,22 +276,29 @@ MonoBehaviour:
     - {fileID: 7072741011685782256, guid: 742783cb168f5f440a9d877298b674d0, type: 3}
     spawnPoints:
     - {fileID: 590106032}
-    - {fileID: 590106032}
+    - {fileID: 1287637710}
     delayBeforeWave: 8
     repeatTimes: 1
-    repeatable: 1
-  - waveName: SecondWave
+    repeatable: 0
+  - waveName: Second Wave
     enemies:
-    - {fileID: 8352615381377669621, guid: e906515b6109db444abf411e25bad092, type: 3}
-    - {fileID: 8352615381377669621, guid: e906515b6109db444abf411e25bad092, type: 3}
+    - {fileID: 7072741011685782256, guid: 742783cb168f5f440a9d877298b674d0, type: 3}
+    - {fileID: 7072741011685782256, guid: 742783cb168f5f440a9d877298b674d0, type: 3}
     spawnPoints:
     - {fileID: 603345267}
     - {fileID: 1287637710}
     delayBeforeWave: 3
     repeatTimes: 1
+    repeatable: 0
+  - waveName: Third wave
+    enemies:
+    - {fileID: 8352615381377669621, guid: e906515b6109db444abf411e25bad092, type: 3}
+    spawnPoints:
+    - {fileID: 603345267}
+    delayBeforeWave: 3
+    repeatTimes: 1
     repeatable: 1
   allEnemiesSpawned: 0
-  startGame: 0
 --- !u!114 &492315725 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}

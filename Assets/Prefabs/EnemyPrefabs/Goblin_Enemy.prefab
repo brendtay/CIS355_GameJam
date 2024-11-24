@@ -645,7 +645,7 @@ MonoBehaviour:
   AttackAreaLeft: {fileID: 667792990440776641}
   AttackAreaRight: {fileID: 5350707647719537939}
   heart: {fileID: 1901031415021653118, guid: 77c361a16282be74fa14033e264511b2, type: 3}
-  heartDropChance: 25
+  heartDropChance: 30
   timeBeforeAttack: 0.5
   powerUpValue: 15
   playerHitSound: {fileID: 8300000, guid: 3b3f4294b7575964685bc8916f6832e7, type: 3}
