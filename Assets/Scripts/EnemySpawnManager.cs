@@ -23,11 +23,12 @@ public class EnemySpawnManager : MonoBehaviour
     private int currentWaveIndex = 0;
     private bool isSpawningWave = false;
 
-
+    private LevelCompleteManager chatManager;
+    public bool allEnemiesSpawned = false;
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-
+        chatManager = FindObjectOfType<LevelCompleteManager>();
        
 
         // Start the first wave
@@ -57,11 +58,8 @@ public class EnemySpawnManager : MonoBehaviour
                 }
                 else
                 {
-                    // All waves completed
-                    gameManager.levelComplete = true;
-
-                    // Trigger chat messages from previous scripts                   
-                     gameManager.levelComplete = true; 
+                   
+                    chatManager.levelComplete = true;
                     
                 }
             }

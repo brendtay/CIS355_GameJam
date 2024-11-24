@@ -202,7 +202,7 @@ public class ChatTutorialManager : MonoBehaviour
             tutorialCanvas.gameObject.SetActive(false);
             wizard.gameObject.SetActive(false);
             secondaryMessagesActive = false;
-            gameManager.levelComplete = true; 
+            
         }
     }
 

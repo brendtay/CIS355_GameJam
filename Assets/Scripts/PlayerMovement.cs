@@ -53,12 +53,13 @@ public class PlayerMovement : MonoBehaviour
     private GameManager gameManager;
 
     public GameObject endGameScreen;
+    public LevelCompleteManager chatManager; 
 
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
+        chatManager = FindObjectOfType<LevelCompleteManager>();
         gameManager = FindObjectOfType<GameManager>();
         MoveAction.Enable();
 
@@ -174,9 +175,14 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (other.CompareTag("EndLevel") && gameManager.levelComplete)
+        if (other.CompareTag("EndLevel") && chatManager.levelComplete)
         {
             LoadNextLevel(); // Call the end level function in GameManager
+        }
+
+        if (other.CompareTag("EndLevelTutorual"))
+        {
+            LoadMainScreen();
         }
 
         if (other.CompareTag("Health"))
@@ -325,6 +331,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Time.timeScale = 1;
 
+        chatManager.StartLevel();
         // Save player's state to GameManager
         if (gameManager != null)
         {

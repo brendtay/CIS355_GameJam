@@ -12,9 +12,9 @@ public class GameManager : MonoBehaviour
     public float startPlayerHealth = 10f;
 
     public string currentLevelName;
-    public bool levelComplete;
+   
     public int currentLevel = 1;
-
+    public bool gameOver = false; 
    
 
     void Awake()
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        levelComplete = false;
+
         playerHealthStore = startPlayerHealth; // Initialize player health in GameManager
     }
 

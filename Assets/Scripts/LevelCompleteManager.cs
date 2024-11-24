@@ -18,20 +18,32 @@ public class LevelCompleteManager : MonoBehaviour
     // You can set these messages in the Inspector for each level
     [TextArea(3, 10)]
     public string[] messagesToDisplay;
-
+    public bool levelComplete;
     private void Start()
     {
         levelCompleteMessages = new Queue<string>();
         LoadLevelCompleteMessages(messagesToDisplay);
 
         // Initially hide the chat box and wizard
+        StartLevel();
+    }
+
+    public void StartLevel()
+    {
         chatCanvas.gameObject.SetActive(false);
         wizard.SetActive(false);
+        levelComplete = false;
     }
 
     private void Update()
     {
-        if (IsLevelCompleted() && !isDisplayingMessages)
+        // Ensure the script does not start displaying messages prematurely
+        if (!levelComplete)
+        {
+            return; // Exit early if the level is not completed
+        }
+
+        if (!isDisplayingMessages)
         {
             StartCoroutine(DisplayLevelCompleteMessages());
         }
@@ -75,15 +87,7 @@ public class LevelCompleteManager : MonoBehaviour
         // GameManager.Instance.LoadNextLevel();
     }
 
-    // Function to check if the level is completed
-    private bool IsLevelCompleted()
-    {
-        // Implement your own logic to determine if the level is completed
-        // This could be a flag from your GameManager or any other condition
-        // For example:
-        GameManager gameManager = FindObjectOfType<GameManager>();
-        return gameManager != null && gameManager.levelComplete;
-    }
+    
 
     // Function to skip messages when Enter is pressed
     public void SkipMessages()
@@ -94,4 +98,17 @@ public class LevelCompleteManager : MonoBehaviour
         wizard.SetActive(false);
         isDisplayingMessages = false;
     }
+    // Method to clean up the chat display when leaving the level
+    public void CleanupChat()
+    {
+        if (isDisplayingMessages)
+        {
+            StopAllCoroutines();
+            levelCompleteMessages.Clear();
+            chatCanvas.gameObject.SetActive(false);
+            wizard.SetActive(false);
+            isDisplayingMessages = false;
+        }
+    }
+
 }

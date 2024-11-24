@@ -288,6 +288,7 @@ MonoBehaviour:
     delayBeforeWave: 3
     repeatTimes: 0
     repeatable: 0
+  allEnemiesSpawned: 0
 --- !u!114 &492315725 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
@@ -1481,6 +1482,7 @@ MonoBehaviour:
 
 '
   - 'I can feel him weaking alreay! '
+  levelComplete: 0
 --- !u!1 &1336489427
 GameObject:
   m_ObjectHideFlags: 0
@@ -2231,22 +2233,6 @@ PrefabInstance:
       propertyPath: endGameScreen
       value: 
       objectReference: {fileID: 968759484}
-    - target: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
-      propertyPath: fullHeartSprite
-      value: 
-      objectReference: {fileID: 2124105579, guid: f74fab95bd9577c4d918a75383eed618, type: 3}
-    - target: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
-      propertyPath: emptyHeartSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: fb967e7ee2a53ff439c1dee57756e755, type: 3}
-    - target: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
-      propertyPath: heartImages.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
-      propertyPath: heartRenderers.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4761516334345444657, guid: beba2811e150e1541954fd8927147978, type: 3}
       propertyPath: heartRenderers.Array.data[0]
       value: 
