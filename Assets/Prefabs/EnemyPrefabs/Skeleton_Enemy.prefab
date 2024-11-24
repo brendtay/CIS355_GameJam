@@ -500,6 +500,7 @@ MonoBehaviour:
   heartDropChance: 100
   timeBeforeAttack: 0.9
   powerUpValue: 30
+  playerHitSound: {fileID: 8300000, guid: 3b3f4294b7575964685bc8916f6832e7, type: 3}
 --- !u!61 &2255263013619344840
 BoxCollider2D:
   m_ObjectHideFlags: 0

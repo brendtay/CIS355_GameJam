@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -55,7 +56,13 @@ public class PlayerMovement : MonoBehaviour
     public GameObject endGameScreen;
     public LevelCompleteManager chatManager; 
 
-    private float powerUpDamageMultiplyer = 1f; 
+    private float powerUpDamageMultiplyer = 1f;
+
+    public AudioClip heartSound; 
+    public AudioClip hurtSound;
+    private AudioSource playerAudio;
+
+    private bool isAlive = true;
 
     void Start()
     {
@@ -63,7 +70,12 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         chatManager = FindObjectOfType<LevelCompleteManager>();
         gameManager = FindObjectOfType<GameManager>();
+
+        playerAudio = GetComponent<AudioSource>();
+
         MoveAction.Enable();
+
+        isAlive = true;
 
         AttackAreaLeft.enabled = false;
         AttackAreaRight.enabled = false;
@@ -88,15 +100,17 @@ public class PlayerMovement : MonoBehaviour
         Movement();
 
         // Check for the "E" key to use a heart and heal
-        if (Input.GetKeyDown(KeyCode.E) && heartsInUI > 0)
+        if (Input.GetKeyDown(KeyCode.E) && heartsInUI > 0 && isAlive)
         {
             RemoveHeart(); // Remove a heart
             HealPlayer(2f); // Heal the player (adjust the value as needed)
+            playerAudio.PlayOneShot(heartSound, 2.0f);
         }
 
-        if (currentPowerUpValue == maxPowerup && Input.GetKeyDown(KeyCode.Q)) // Only activate if power-up meter is full
+        if (currentPowerUpValue == maxPowerup && Input.GetKeyDown(KeyCode.Q) && isAlive) // Only activate if power-up meter is full
         {
             StartCoroutine(ActivatePowerUp());
+            
         }
 
     }
@@ -122,11 +136,15 @@ public class PlayerMovement : MonoBehaviour
 
         // Wait for the attack animation to finish
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        DisableAttackCollider();
     }
     void Movement()
     {
         move = MoveAction.ReadValue<Vector2>();
-
+        if (!isAlive)
+        {
+            return; 
+        }
         if (move.sqrMagnitude > 0.0f)
         {
             moveDirection = move.normalized;
@@ -179,6 +197,7 @@ public class PlayerMovement : MonoBehaviour
             if (damageInfo != null)
             {
                 TakeDamage(damageInfo.enemyDamageAmount);
+                playerAudio.PlayOneShot(hurtSound, 1.0f); 
             }
         }
 
@@ -249,6 +268,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Death()
     {
+        isAlive = false; 
         Debug.Log("Player has died.");
         animator.SetTrigger("Death");
         GameOver();
@@ -386,7 +406,7 @@ public class PlayerMovement : MonoBehaviour
     public void RestartGame()
     {
         Time.timeScale = 1;
-
+        isAlive = true; 
         // Reset player's state
         if (gameManager != null)
         {

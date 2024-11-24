@@ -35,7 +35,10 @@ public class EnemyAI : MonoBehaviour
     private PlayerMovement playerScript;
 
     public float powerUpValue = 0.5f;
+
     
+    public AudioClip playerHitSound;
+    private AudioSource enemyAudio;
 
     void Start()
     {
@@ -47,7 +50,7 @@ public class EnemyAI : MonoBehaviour
         AttackAreaLeft.enabled = false;
         AttackAreaRight.enabled = false;
         animator = GetComponent<Animator>();
-
+        enemyAudio = GetComponent<AudioSource>();
         startHealth = health;
     }
 
@@ -111,6 +114,7 @@ public class EnemyAI : MonoBehaviour
             {
                 TriggerHit(); // Play hit reaction animation
                               //Debug.Log("Enemy hit");
+                enemyAudio.PlayOneShot(playerHitSound, 1.0f);
 
             }
             else
