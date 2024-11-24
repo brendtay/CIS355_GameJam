@@ -1738,11 +1738,11 @@ MonoBehaviour:
   chatCanvas: {fileID: 248730495}
   wizard: {fileID: 1077654113}
   messagesToDisplay:
-  - 'I can already feel him weakening
+  - 'I can already feel him weakening!
 
 '
-  - To reach him we must pass the walls
-  - That means we will go into the castle
+  - To reach him we must enter the castle.
+  - He will be located below it!
   levelComplete: 0
 --- !u!1 &1401696452
 GameObject:
