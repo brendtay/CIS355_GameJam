@@ -1,4 +1,8 @@
+![thumbnail](https://github.com/user-attachments/assets/e44f2346-ce79-45e2-89b9-206ca23c8dfd)
+
 ### List of Sources
+
+
 
 #### Assets Used
 1. **Main Character**  
