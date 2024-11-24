@@ -35,6 +35,8 @@
 10. **Heart/Health Canisters**  
     Source: [Heart Container Animated in Pixel Art](https://temok.itch.io/heart-container-animated-in-pixel-art)
 
+final boss - https://lionheart963.itch.io/wizard
+
 #### Sounds Used
 1. **Health Use Sound**  
    Source: [Success Sound Effect](https://pixabay.com/sound-effects/success-02-68338/)
