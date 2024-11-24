@@ -1749,11 +1749,11 @@ MonoBehaviour:
   - 'I can already feel him weakening!
 
 '
-  - To reach him we must enter the castle.
+  - But to reach him we must enter the castle.
   - He will be located below it!
   preGameMessagesArray:
   - The castle has been taken over
-  - We must take it back and kill and hostiles
+  - We must take it back and kill the hostiles
   showPreGameMessages: 1
   levelComplete: 0
 --- !u!1 &1401696452

@@ -54,15 +54,15 @@ public class ChatTutorialManager : MonoBehaviour
             "Hold the Down Arrow to raise your shield.",
             "Now, let’s put those skills to the test.",
             "I’ll summon some enemies!",
-            "If you see a enemy dropped a heart!",
+            "If you see a enemy drop a heart!",
             "Walk over it to pick it up",
             "You can store up to 3 hearts if your health is full",
             "You can press E at any time to use one!",
             "The blue bar is your powerup meter",
             "When it is full press q to activate it",
             "While it is active you do 2.5x the damage!",
-            "And another note: if you get annoyed of",
-            "Me you can press enter at any time to skip these"
+            "And another note: if you get annoyed of me",
+            "You can press enter at any time to skip these"
         });
 
         // Load additional secondary messages

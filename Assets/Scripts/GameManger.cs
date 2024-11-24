@@ -67,7 +67,4 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("HowToPlay");
         Time.timeScale = 1;
     }
-
-   
-   
 }
