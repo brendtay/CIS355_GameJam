@@ -1,9 +1,6 @@
-![thumbnail](https://github.com/user-attachments/assets/e44f2346-ce79-45e2-89b9-206ca23c8dfd)
+
 
 ### List of Sources
-
-
-
 #### Assets Used
 1. **Main Character**  
    Source: [Free Fantasy Knight](https://free-game-assets.itch.io/free-fantasy-knight)
@@ -34,10 +31,9 @@
 
 10. **Heart/Health Canisters**  
     Source: [Heart Container Animated in Pixel Art](https://temok.itch.io/heart-container-animated-in-pixel-art)
-
-final boss - https://lionheart963.itch.io/wizard
-
-bringer of death - https://clembod.itch.io/bringer-of-death-free/download/eyJpZCI6OTgwNzM4LCJleHBpcmVzIjoxNzMyNDcyODM4fQ%3d%3d.HK%2fnzfsbeQ78CxjkpFdzH%2fd7i1A%3d
+    
+11. **Bringer Of Death (Final boss)**
+    Source: [Bringer of death](https://clembod.itch.io/bringer-of-death-free/download/eyJpZCI6OTgwNzM4LCJleHBpcmVzIjoxNzMyNDcyODM4fQ%3d%3d.HK%2fnzfsbeQ78CxjkpFdzH%2fd7i1A%3d)
 
 #### Sounds Used
 1. **Health Use Sound**  
@@ -53,8 +49,10 @@ bringer of death - https://clembod.itch.io/bringer-of-death-free/download/eyJpZC
 4. **Level Music**  
    Track: "8 Bit Adventure"  
    Source: [Fesliyan Studios](https://www.FesliyanStudios.com)
-
-   Boss level mustic Boss_Time_-_www.FesliyanStudios.com.mp3 https://www.FesliyanStudios.com 
+   
+6. **Boss Level Music**
+   TrackL "Boss_Time"
+   Source: [Fesliyan Studios](https://www.FesliyanStudios.com)
 
 #### Unused Assets
 1. **Currently Unused Character**  
@@ -69,4 +67,3 @@ bringer of death - https://clembod.itch.io/bringer-of-death-free/download/eyJpZC
 #### Video Tutorials
 1. **Health Bar Video**  
    Source: [YouTube Tutorial](https://www.youtube.com/watch?v=0tDPxNB2JNs)
-
